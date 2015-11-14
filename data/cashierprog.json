@@ -1,0 +1,121 @@
+{
+  "success": true,
+  "status": "OK",
+  "jsessionid": "C17436AA74B8A17A78219EB958F40982",
+  "response": {
+    "attributionURL": "http://www.glassdoor.com/api/json/search/jobProgression.htm?countryId=1&amp;apiUserAgent=&amp;v=1&amp;apiUserIpAddress=0.0.0.0&amp;format=json&amp;t.k=h0bHsIwlmfs&amp;jobTitle=cashier",
+    "jobTitle": "cashier",
+    "payCurrencyCode": "USD",
+    "payCurrencySymbol": "$",
+    "payLow": 10323,
+    "payMedian": 19425,
+    "payHigh": 31897,
+    "results": [
+      {
+        "nextJobTitle": "sales associate",
+        "frequency": 3593,
+        "frequencyPercent": 26.473622163277337,
+        "nationalJobCount": 179184,
+        "medianSalary": 35000
+      },
+      {
+        "nextJobTitle": "receptionist",
+        "frequency": 1640,
+        "frequencyPercent": 12.083701738874153,
+        "nationalJobCount": 87558,
+        "medianSalary": 30000
+      },
+      {
+        "nextJobTitle": "administrative assistant",
+        "frequency": 1011,
+        "frequencyPercent": 7.4491600353669325,
+        "nationalJobCount": 39258,
+        "medianSalary": 39500
+      },
+      {
+        "nextJobTitle": "server",
+        "frequency": 929,
+        "frequencyPercent": 6.844974948423224,
+        "nationalJobCount": 49115,
+        "medianSalary": 23000
+      },
+      {
+        "nextJobTitle": "customer service representative",
+        "frequency": 866,
+        "frequencyPercent": 6.3807839669908635,
+        "nationalJobCount": 125918,
+        "medianSalary": 32000
+      },
+      {
+        "nextJobTitle": "assistant manager",
+        "frequency": 788,
+        "frequencyPercent": 5.806071323312702,
+        "nationalJobCount": 38393,
+        "medianSalary": 40000
+      },
+      {
+        "nextJobTitle": "intern",
+        "frequency": 768,
+        "frequencyPercent": 5.658709106984968,
+        "nationalJobCount": 13729,
+        "medianSalary": 40000
+      },
+      {
+        "nextJobTitle": "medical assistant",
+        "frequency": 686,
+        "frequencyPercent": 5.054524020041262,
+        "nationalJobCount": 39801,
+        "medianSalary": 30000
+      },
+      {
+        "nextJobTitle": "teller",
+        "frequency": 659,
+        "frequencyPercent": 4.855585027998821,
+        "nationalJobCount": 40440,
+        "medianSalary": 22800
+      },
+      {
+        "nextJobTitle": "security officer",
+        "frequency": 601,
+        "frequencyPercent": 4.428234600648394,
+        "nationalJobCount": 20224,
+        "medianSalary": 28290
+      },
+      {
+        "nextJobTitle": "security guard",
+        "frequency": 581,
+        "frequencyPercent": 4.28087238432066,
+        "nationalJobCount": 20224,
+        "medianSalary": 25000
+      },
+      {
+        "nextJobTitle": "office assistant",
+        "frequency": 394,
+        "frequencyPercent": 2.903035661656351,
+        "nationalJobCount": 39258,
+        "medianSalary": 29000
+      },
+      {
+        "nextJobTitle": "customer service",
+        "frequency": 376,
+        "frequencyPercent": 2.770409666961391,
+        "nationalJobCount": 125918,
+        "medianSalary": 34000
+      },
+      {
+        "nextJobTitle": "home health aide",
+        "frequency": 345,
+        "frequencyPercent": 2.541998231653404,
+        "nationalJobCount": 79047,
+        "medianSalary": 0
+      },
+      {
+        "nextJobTitle": "volunteer",
+        "frequency": 335,
+        "frequencyPercent": 2.4683171234895376,
+        "nationalJobCount": 3717,
+        "medianSalary": 43362
+      }
+    ]
+  }
+}
