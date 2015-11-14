@@ -54,9 +54,130 @@ function mapReqListener () {
     updateMap();
 }
 
+function initializeBarChart1() {
+    var svgBounds = document.getElementById("barChart1").getBoundingClientRect(),
+        xAxisWidth = 160,
+        yAxisHeight = 60;
+
+    var xScale = d3.scale.ordinal()
+        .domain(progData.response.results.map(function (d) {
+            return d.nextJobTitle;
+        })).rangeRoundBands([yAxisHeight, svgBounds.width], 0.1);
+
+    var maxPay = d3.max(progData.response.results, function (d) {
+        return parseInt(d.medianSalary);
+    });
+
+    var minPay = d3.min(progData.response.results, function (d) {
+        return parseInt(d.medianSalary);
+    });
+
+    var yScale = d3.scale.linear()
+        .domain([0, maxPay]).range([svgBounds.height - xAxisWidth, 0]);
+
+    colorScale = d3.scale.linear()
+        .domain([0, maxPay])
+        .range(['#edf8e9', '#006d2c'])
+        .interpolate(d3.interpolateLab);
+
+    var xAxis = d3.svg.axis()
+        .scale(xScale)
+        .orient("left");
+    d3.select("#xAxis1")
+        .attr("transform", "rotate(-90) translate(" + (xAxisWidth - svgBounds.height) + ",0)")
+        .call(xAxis);
+
+    var yAxis = d3.svg.axis()
+        .scale(yScale)
+        .orient("left");
+    d3.select("#yAxis1")
+        .attr("transform", "translate(" + yAxisHeight + ",0)")
+        .call(yAxis);
+
+    //Create the bars
+    var bars = d3.select("#bars1").selectAll("rect").data(progData.response.results);
+    bars.enter().append('rect');
+    bars.exit().remove();
+    bars.attr('x', function (d) {
+        return xScale(d.nextJobTitle);
+    })
+        .attr('width', function (d) {
+            return xScale.rangeBand();
+        })
+    .attr('y', function (d) {
+        return yScale(d.medianSalary);
+    })
+    .attr('height', function (d) {
+        return svgBounds.height - xAxisWidth - yScale(d.medianSalary);
+    })
+    .attr('fill', function (d) {
+        return colorScale(d.medianSalary);
+    });
+}
+
+function initializeBarChart2() {
+    var svgBounds = document.getElementById("barChart2").getBoundingClientRect(),
+        xAxisWidth = 160,
+        yAxisHeight = 60;
+
+    var xScale = d3.scale.ordinal()
+        .domain(progData.response.results.map(function (d) {
+            return d.nextJobTitle;
+        })).rangeRoundBands([yAxisHeight, svgBounds.width], 0.1);
+
+    var maxPay = d3.max(progData.response.results, function (d) {
+        return parseInt(d.nationalJobCount);
+    });
+
+    var minPay = d3.min(progData.response.results, function (d) {
+        return parseInt(d.nationalJobCount);
+    });
+
+    var yScale = d3.scale.linear()
+        .domain([0, maxPay]).range([svgBounds.height - xAxisWidth, 0]);
+
+    colorScale = d3.scale.linear()
+        .domain([0, maxPay])
+        .range(['#edf8e9', '#006d2c'])
+        .interpolate(d3.interpolateLab);
+
+    var xAxis = d3.svg.axis()
+        .scale(xScale)
+        .orient("left");
+    d3.select("#xAxis2")
+        .attr("transform", "rotate(-90) translate(" + (xAxisWidth - svgBounds.height) + ",0)")
+        .call(xAxis);
+
+    var yAxis = d3.svg.axis()
+        .scale(yScale)
+        .orient("left");
+    d3.select("#yAxis2")
+        .attr("transform", "translate(" + yAxisHeight + ",0)")
+        .call(yAxis);
+
+    var bars = d3.select("#bars2").selectAll("rect").data(progData.response.results);
+    bars.enter().append('rect');
+    bars.exit().remove();
+    bars.attr('x', function (d) {
+        return xScale(d.nextJobTitle);
+    })
+        .attr('width', function (d) {
+            return xScale.rangeBand();
+        })
+    .attr('y', function (d) {
+        return yScale(d.nationalJobCount);
+    })
+    .attr('height', function (d) {
+        return svgBounds.height - xAxisWidth - yScale(d.nationalJobCount);
+    })
+    .attr('fill', function (d) {
+        return colorScale(d.nationalJobCount);
+    });
+}
+
 function updateBarChart1() {
     var svgBounds = document.getElementById("barChart1").getBoundingClientRect(),
-        xAxisWidth = 150,
+        xAxisWidth = 160,
         yAxisHeight = 60;
 
     var xScale = d3.scale.ordinal()
@@ -104,20 +225,31 @@ function updateBarChart1() {
         .attr('width', function (d) {
             return xScale.rangeBand();
         })
+        //.attr('y', function (d) {
+        //    return yScale(d.medianSalary);
+        //})
+        //.attr('height', function (d) {
+        //    return svgBounds.height - xAxisWidth - yScale(d.medianSalary);
+        //})
+        //.attr('fill', function (d) {
+        //    return colorScale(d.medianSalary);
+        //})
+    bars.transition()
+        .duration(3000)
         .attr('y', function (d) {
             return yScale(d.medianSalary);
+        }).attr('fill', function (d) {
+            return colorScale(d.medianSalary);
         })
         .attr('height', function (d) {
             return svgBounds.height - xAxisWidth - yScale(d.medianSalary);
         })
-        .attr('fill', function (d) {
-            return colorScale(d.medianSalary);
-        });
+    ;
 }
 
 function updateBarChart2() {
     var svgBounds = document.getElementById("barChart2").getBoundingClientRect(),
-        xAxisWidth = 150,
+        xAxisWidth = 160,
         yAxisHeight = 60;
 
     var xScale = d3.scale.ordinal()
@@ -164,14 +296,24 @@ function updateBarChart2() {
         .attr('width', function (d) {
             return xScale.rangeBand();
         })
+        //.attr('y', function (d) {
+        //    return yScale(d.nationalJobCount);
+        //})
+        //.attr('height', function (d) {
+        //    return svgBounds.height - xAxisWidth - yScale(d.nationalJobCount);
+        //})
+        //.attr('fill', function (d) {
+        //    return colorScale(d.nationalJobCount);
+        //})
+    bars.transition()
+        .duration(3000)
         .attr('y', function (d) {
             return yScale(d.nationalJobCount);
+        }).attr('fill', function (d) {
+            return colorScale(d.nationalJobCount);
         })
         .attr('height', function (d) {
             return svgBounds.height - xAxisWidth - yScale(d.nationalJobCount);
-        })
-        .attr('fill', function (d) {
-            return colorScale(d.nationalJobCount);
         });
 }
 
@@ -220,8 +362,10 @@ function drawStates(usStateData) {
 d3.json("data/cashierprog.json", function (error, progressionData) {
     if (error) throw error;
     progData = progressionData;
-    updateBarChart1();
-    updateBarChart2();
+    initializeBarChart1();
+    initializeBarChart2()
+    //updateBarChart1();
+    //updateBarChart2();
 });
 
 d3.json("data/cashiercities.json", function (error, citiesData) {
