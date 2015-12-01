@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Homework 3 Solution</title>
+    <title>Glassdoor Data Visualization</title>
     <style>
         #states {
             stroke: rgb(255, 255, 255);
@@ -62,27 +62,32 @@
 <body>
     <body>
         <h2>GlassDoor Data Visualization</h2>
-        <!--<span>Your Name</span>-->
-        <!--<span>Your Email Address</span>-->
-        <!--<span>u0123456</span>-->
         <span>
             <textarea rows="1" cols="30" id="textarea" onkeypress="checkEnter()">plumber</textarea>
 
             <label></label>
-            <select id="dataset">
-                <option value="Location">City, State</option>
-                <option selected value="Job Progression">Job Progression</option>
+            <select id="dropDown" onchange="dropdownChanged()">
+                <option value="Job Progression">Job Progression</option>
+                <option value="City, State">City, State</option>
                 <option value="Skill">Skill</option>
-                <option value="Industry">Industry</option>
+                <option value="Industry" onselect="showIndustryTable()">Industry</option>
             </select>
 
             <button name="button" onclick="submitSearch()">Submit</button>
+
         </span>
         <br/>
         <hr/>
         
         <span id="info"></span>
         <br/>
+
+        <!--<div>-->
+            <!--<h2>Bubble Chart</h2>-->
+            <!--<svg id="bubbleChart"></svg>-->
+        <!--</div>-->
+
+
 
         <div>
             <h2>Job Progression Pay</h2>
