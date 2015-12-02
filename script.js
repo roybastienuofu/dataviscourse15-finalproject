@@ -67,7 +67,7 @@ function industrySearch(id){
     id = id.replace(/\)/g, '');
     id = id.replace(/\-/g, '');
     id = industryIDs[id];
-    console.log(id);
+    //console.log(id);
     var industryReq = new XMLHttpRequest();
     industryReq.addEventListener("load", industryReqListener);
     var industryurl = "http://api.glassdoor.com/api/api.htm?t.p=46048&t.k=h0bHsIwlmfs&userip=0.0.0.0&useragent=&format=json&v=1&action=jobs-stats&returnJobTitles=true&returnCities=true&admLevelRequested=1&jc=" + id;
@@ -382,12 +382,13 @@ function updateMap() {
     for(var i = 0; i < 16; i++){
         shortCityData[i] = cityData.response.cities[i];
     }
-    console.log(shortCityData[0].name);
-    //console.log(shortCityData);
+    //console.log(shortCityData[0]);
     var projection = d3.geo.albersUsa();
     var circles = d3.select('#points').selectAll('circle').data(d3.values(shortCityData));
-    circles.enter().append('circle')
-        .attr('class', 'game')
+    circles.enter().append('circle');
+    circles.exit().remove();
+
+    circles.attr('class', 'game')
         .attr('r', 5)
         .attr('cx', function (d) {
             if (!d.longitude==0 && !d.latitude==0){
@@ -399,14 +400,15 @@ function updateMap() {
             }
         });
 
-    var j = shortCityData.length*3;
-    //circles.style('fill', function (d) {
-    //    return colorScale(i+10000);
-    //})
+    var j = shortCityData.length;
+    circles.style('fill', function (d) {
+        return colorScale(d.numJobs*20);
+    });
     circles.attr('r', function (d) {
         j = j - 0.5;
         return j;
     });
+    circles.on('click', function(d) {throwAlert(d.name)});
 }
 
 function drawStates(usStateData) {
@@ -429,8 +431,8 @@ function initializeBubbleChart(){
         .size([diameter, diameter])
         .padding(1.5);
 
-    var svg = d3.select("body").append("svg")
-    //var svg = document.getElementById("bubbleChart");
+
+    var svg = d3.select("#bubbleChart").append("svg")
         .attr("width", diameter)
         .attr("height", diameter)
         .attr("class", "bubble");
