@@ -17,15 +17,6 @@ function checkEnter() {
         submitSearch();
     }
 }
-function showIndustryTable(){
-    var table = document.getElementById('industryTable');
-    table.setAttribute("style", "display: inline-table;")
-}
-
-function hideIndustryTable(){
-    var table = document.getElementById('industryTable');
-    table.setAttribute("style", "display: none;")
-}
 
 function dropdownChanged(){
     var selectBox = document.getElementById('dropDown');
@@ -42,9 +33,8 @@ function dropdownChanged(){
 }
 
 function submitSearch(){
-    //console.log("button pressed");
+
     var text = document.getElementById('textarea').value;
-    //console.log(text);
 
     var progReq = new XMLHttpRequest();
     progReq.addEventListener("load", progReqListener);
@@ -77,7 +67,7 @@ function industrySearch(id){
 
 function industryReqListener(){
     industryData = JSON.parse(this.responseText);
-    //console.log(industryData.response.cities);
+    console.log(industryData);
     cityData = industryData;
     updateMap();
     //cityData = industryData.response.cities;
@@ -108,14 +98,14 @@ function mapReqListener () {
 }
 
 function initializeBubbleData(){
-    //for (var i = 1; i < 33; i++){
-        //console.log(i);
+    for (var i = 1; i < 33; i++){
+        console.log(i);
         var bubbleReq = new XMLHttpRequest();
-        bubbleReq.addEventListener("load", bubbleReqListener, throwAlert);
+        bubbleReq.addEventListener("load", bubbleReqListener);
         var bubbleurl = "http://api.glassdoor.com/api/api.htm?t.p=46048&t.k=h0bHsIwlmfs&userip=0.0.0.0&useragent=&format=json&v=1&action=jobs-stats&returnJobTitles=true&returnStates=true&admLevelRequested=1&jc=" + 33;
         bubbleReq.open("GET", bubbleurl);
         bubbleReq.send();
-    //}
+    }
 }
 
 function bubbleReqListener (){
@@ -328,6 +318,8 @@ function updateBarChart2() {
         return parseInt(d.nationalJobCount);
     });
 
+    //console.log(progData.response.results);
+
     var minPay = d3.min(progData.response.results, function (d) {
         return parseInt(d.nationalJobCount);
     });
@@ -408,7 +400,12 @@ function updateMap() {
         j = j - 0.5;
         return j;
     });
-    circles.on('click', function(d) {throwAlert(d.name)});
+    circles.on('click', function(d) {
+            throwAlert(d.name);
+
+        }
+
+    );
 }
 
 function drawStates(usStateData) {
