@@ -188,7 +188,14 @@ function getIndustry1Data(id){
     industry1Req.send();
 }
 
+var salary1Calls = 0;
+var salary1Sum = 0;
+var salary1TotalCalls = 0;
 function industry1Listener (){
+    salary1Calls = 0;
+    salary1Sum = 0;
+    salary1TotalCalls = 0;
+
     industry1Data = JSON.parse(this.responseText);
     var jobTitles = industry1Data.response.jobTitles;
     var totalJobs = 0;
@@ -206,9 +213,7 @@ function industry1Listener (){
     }
 }
 
-var salary1Calls = 0;
-var salary1Sum = 0;
-var salary1TotalCalls = 0;
+
 function getIndustry1SalaryData(){
     var industry1SalaryData = JSON.parse(this.responseText);
     //console.log(industry1SalaryData);
@@ -939,6 +944,11 @@ function initializeBubbleChart(){
 
 
         node.on("click", function(d) {
+            if (d3.event.ctrlKey) {
+                alert("Control Click");
+                return;
+            }
+
             //console.log("Industry Selected");
             selectedIndustry = d.className;
             document.getElementById('textarea').value = selectedIndustry;
@@ -984,7 +994,7 @@ function industryComparison(){
                 {label: industry2Name, values: [industry2Jobs, industry2Salary]
             }]
     };
-    //console.log(compData);
+    console.log("compData.series.length: " + compData.series.length);
 
     var chartWidth       = 500,
         barHeight        = 20,
@@ -1001,11 +1011,12 @@ function industryComparison(){
         }
     }
 
+
     // Color scale
     var color = d3.scale.linear()
         .domain([0, 2])
         .range(['#edf8e9', '#006d2c']);
-//                .range(['#edf8e9', '#006d2c']);
+
 
     var chartHeight = barHeight * zippedData.length + gapBetweenGroups * compData.labels.length;
 
