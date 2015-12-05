@@ -106,7 +106,7 @@ function mapReqListener () {
     cityData = JSON.parse(this.responseText);
     //console.log(cityData);
     if (progData.response.results.length == 0){
-        alert("Sorry, please refresh our page.")
+        //alert("Sorry, please refresh our page.")
         //if (cityData.response.results.length == 0){
         return;
     }
