@@ -80,13 +80,13 @@ function progSearch(text){
     //console.log(selectedJob);
     var progReq = new XMLHttpRequest();
     progReq.addEventListener("load", progReqListener);
-    var progurl = "http://api.glassdoor.com/api/api.htm?t.p=46048&t.k=h0bHsIwlmfs&userip=0.0.0.0&useragent=&format=json&v=1&action=jobs-prog&countryId=1&jobTitle=" + text;
+    var progurl = "https://api.glassdoor.com/api/api.htm?t.p=46048&t.k=h0bHsIwlmfs&userip=0.0.0.0&useragent=&format=json&v=1&action=jobs-prog&countryId=1&jobTitle=" + text;
     progReq.open("GET", progurl);
     progReq.send();
 
     var mapReq = new XMLHttpRequest();
     mapReq.addEventListener("load", mapReqListener);
-    var mapurl = "http://api.glassdoor.com/api/api.htm?t.p=46048&t.k=h0bHsIwlmfs&userip=0.0.0.0&useragent=&format=json&v=1&action=jobs-stats&returnCities=true&admLevelRequested=1&jobTitle=" + text;
+    var mapurl = "https://api.glassdoor.com/api/api.htm?t.p=46048&t.k=h0bHsIwlmfs&userip=0.0.0.0&useragent=&format=json&v=1&action=jobs-stats&returnCities=true&admLevelRequested=1&jobTitle=" + text;
     mapReq.open("GET", mapurl);
     mapReq.send();
 }
@@ -126,7 +126,7 @@ function industrySearch(id){
 
     var industryReq = new XMLHttpRequest();
     industryReq.addEventListener("load", industryReqListener);
-    var industryurl = "http://api.glassdoor.com/api/api.htm?t.p=46048&t.k=h0bHsIwlmfs&userip=0.0.0.0&useragent=&format=json&v=1&action=jobs-stats&returnJobTitles=true&returnCities=true&admLevelRequested=1&jc=" + id;
+    var industryurl = "https://api.glassdoor.com/api/api.htm?t.p=46048&t.k=h0bHsIwlmfs&userip=0.0.0.0&useragent=&format=json&v=1&action=jobs-stats&returnJobTitles=true&returnCities=true&admLevelRequested=1&jc=" + id;
     industryReq.open("GET", industryurl);
     industryReq.send();
 }
@@ -145,7 +145,7 @@ function industryReqListener(){
 function natJobSearch(){
     var natJobReq = new XMLHttpRequest();
     natJobReq.addEventListener("load", natJobReqListener);
-    var naturl = "http://api.glassdoor.com/api/api.htm?t.p=46048&t.k=h0bHsIwlmfs&userip=0.0.0.0&useragent=&format=json&v=1&action=jobs-stats&admLevelRequested=1&returnJobTitles=true";
+    var naturl = "https://api.glassdoor.com/api/api.htm?t.p=46048&t.k=h0bHsIwlmfs&userip=0.0.0.0&useragent=&format=json&v=1&action=jobs-stats&admLevelRequested=1&returnJobTitles=true";
     natJobReq.open("GET", naturl);
     natJobReq.send();
 }
@@ -161,7 +161,7 @@ function cityJobSearch(city){
     selectedCity = city.replace(/\b./g, function(m){ return m.toUpperCase(); });
     var cityReq = new XMLHttpRequest();
     cityReq.addEventListener("load", cityReqListener);
-    var cityurl = "http://api.glassdoor.com/api/api.htm?t.p=46048&t.k=h0bHsIwlmfs&userip=0.0.0.0&useragent=&format=json&v=1&action=jobs-stats&returnJobTitles=true&admLevelRequested=1&l=" + city;
+    var cityurl = "https://api.glassdoor.com/api/api.htm?t.p=46048&t.k=h0bHsIwlmfs&userip=0.0.0.0&useragent=&format=json&v=1&action=jobs-stats&returnJobTitles=true&admLevelRequested=1&l=" + city;
     cityReq.open("GET", cityurl);
     cityReq.send();
 }
@@ -183,7 +183,7 @@ function getIndustry1Data(id){
     id = industryIDs[id];
     var industry1Req = new XMLHttpRequest();
     industry1Req.addEventListener("load", industry1Listener);
-    var industry1url = "http://api.glassdoor.com/api/api.htm?t.p=46048&t.k=h0bHsIwlmfs&userip=0.0.0.0&useragent=&format=json&v=1&action=jobs-stats&returnJobTitles=true&admLevelRequested=1&jc=" + id;
+    var industry1url = "https://api.glassdoor.com/api/api.htm?t.p=46048&t.k=h0bHsIwlmfs&userip=0.0.0.0&useragent=&format=json&v=1&action=jobs-stats&returnJobTitles=true&admLevelRequested=1&jc=" + id;
     industry1Req.open("GET", industry1url);
     industry1Req.send();
 }
@@ -207,7 +207,7 @@ function industry1Listener (){
     for (i = 0; i < industry1Data.response.jobTitles.length; i++){
         var industry1SalaryReq = new XMLHttpRequest();
         industry1SalaryReq.addEventListener("load", getIndustry1SalaryData);
-        var industry1url = "http://api.glassdoor.com/api/api.htm?t.p=46048&t.k=h0bHsIwlmfs&userip=0.0.0.0&useragent=&format=json&v=1&action=jobs-prog&countryId=1&jobTitle=" + industry1Data.response.jobTitles[i].jobTitle;
+        var industry1url = "https://api.glassdoor.com/api/api.htm?t.p=46048&t.k=h0bHsIwlmfs&userip=0.0.0.0&useragent=&format=json&v=1&action=jobs-prog&countryId=1&jobTitle=" + industry1Data.response.jobTitles[i].jobTitle;
         industry1SalaryReq.open("GET", industry1url);
         industry1SalaryReq.send();
     }
@@ -240,7 +240,7 @@ function getIndustry2Data(id){
     id = industryIDs[id];
     var industry2Req = new XMLHttpRequest();
     industry2Req.addEventListener("load", industry2Listener);
-    var industry1url = "http://api.glassdoor.com/api/api.htm?t.p=46048&t.k=h0bHsIwlmfs&userip=0.0.0.0&useragent=&format=json&v=1&action=jobs-stats&returnJobTitles=true&admLevelRequested=1&jc=" + id;
+    var industry1url = "https://api.glassdoor.com/api/api.htm?t.p=46048&t.k=h0bHsIwlmfs&userip=0.0.0.0&useragent=&format=json&v=1&action=jobs-stats&returnJobTitles=true&admLevelRequested=1&jc=" + id;
     industry2Req.open("GET", industry1url);
     industry2Req.send();
 }
@@ -257,7 +257,7 @@ function industry2Listener (){
     for (i = 0; i < industry2Data.response.jobTitles.length; i++){
         var industry2SalaryReq = new XMLHttpRequest();
         industry2SalaryReq.addEventListener("load", getIndustry2SalaryData);
-        var industry1url = "http://api.glassdoor.com/api/api.htm?t.p=46048&t.k=h0bHsIwlmfs&userip=0.0.0.0&useragent=&format=json&v=1&action=jobs-prog&countryId=1&jobTitle=" + industry2Data.response.jobTitles[i].jobTitle;
+        var industry1url = "https://api.glassdoor.com/api/api.htm?t.p=46048&t.k=h0bHsIwlmfs&userip=0.0.0.0&useragent=&format=json&v=1&action=jobs-prog&countryId=1&jobTitle=" + industry2Data.response.jobTitles[i].jobTitle;
         industry2SalaryReq.open("GET", industry1url);
         industry2SalaryReq.send();
     }
@@ -898,6 +898,7 @@ function drawStates(usStateData) {
 }
 
 function initializeBubbleChart(){
+    // code adopted from: http://bl.ocks.org/mbostock/4063269
     //console.log("initializeBubbleChart");
     var diameter = 900,
         format = d3.format(",d"),
@@ -994,7 +995,7 @@ function industryComparison(){
                 {label: industry2Name, values: [industry2Jobs, industry2Salary]
             }]
     };
-    console.log("compData.series.length: " + compData.series.length);
+    //console.log("compData.series.length: " + compData.series.length);
 
     var chartWidth       = 500,
         barHeight        = 20,
