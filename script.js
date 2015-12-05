@@ -1193,6 +1193,8 @@ function industryComparison(){
         .text(function (d) { return d.label; });
 }
 
+
+//These should run when loaded.
 d3.json("data/cashierprog.json", function (error, progressionData) {
     if (error) throw error;
     progData = progressionData;
