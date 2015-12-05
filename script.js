@@ -4,8 +4,11 @@ var progData,
     industryData,
     industry1Data,
     industry2Data,
+    industry1Jobs,
+    industry2Jobs,
+    industry1Salary,
+    industry2Salary,
     industryIDs,
-    bubbleData,
     nationalJobs,
     cityJobs,
     selectedCity,
@@ -53,7 +56,7 @@ function submitSearch(text){
 
     var selectBox = document.getElementById('dropDown');
     var selectedValue = selectBox.options[selectBox.selectedIndex].value;
-    console.log("submitSearch");
+    //console.log("submitSearch");
     if (selectedValue == "Job Progression"){
         selectedJob = text;
         progSearch(text);
@@ -165,27 +168,94 @@ function cityReqListener(){
     updateBarChart2NatJobData();
 }
 
-function initializeIndusrty1Data(){
-    for (var i = 1; i < 33; i++){
-        console.log(i);
-        var bubbleReq = new XMLHttpRequest();
-        bubbleReq.addEventListener("load", industry1Listener);
-        var bubbleurl = "http://api.glassdoor.com/api/api.htm?t.p=46048&t.k=h0bHsIwlmfs&userip=0.0.0.0&useragent=&format=json&v=1&action=jobs-stats&returnJobTitles=true&returnStates=true&admLevelRequested=1&jc=" + 33;
-        bubbleReq.open("GET", bubbleurl);
-        bubbleReq.send();
-    }
+function getIndustry1Data(id){
+        var industry1Req = new XMLHttpRequest();
+        industry1Req.addEventListener("load", industry1Listener);
+        var industry1url = "http://api.glassdoor.com/api/api.htm?t.p=46048&t.k=h0bHsIwlmfs&userip=0.0.0.0&useragent=&format=json&v=1&action=jobs-stats&returnJobTitles=true&admLevelRequested=1&jc=" + id;
+        industry1Req.open("GET", industry1url);
+        industry1Req.send();
 }
 
 
 function industry1Listener (){
-    bubbleData = JSON.parse(this.responseText);
+    industry1Data = JSON.parse(this.responseText);
     var jobTitles = industry1Data.response.jobTitles;
-    //console.log(jobTitles);
     var totalJobs = 0;
     for (var i = 0; i < jobTitles.length; i++){
         totalJobs += jobTitles[i].numJobs;
     }
-    //console.log(totalJobs);
+    industry1Jobs = totalJobs;
+    console.log(totalJobs);
+    for (i = 0; i < industry1Data.response.jobTitles.length; i++){
+        var industry1SalaryReq = new XMLHttpRequest();
+        industry1SalaryReq.addEventListener("load", getIndustry1SalaryData);
+        var industry1url = "http://api.glassdoor.com/api/api.htm?t.p=46048&t.k=h0bHsIwlmfs&userip=0.0.0.0&useragent=&format=json&v=1&action=jobs-prog&countryId=1&jobTitle=" + industry1Data.response.jobTitles[i].jobTitle;
+        //var industry1url = "http://api.glassdoor.com/api/api.htm?t.p=46048&t.k=h0bHsIwlmfs&userip=0.0.0.0&useragent=&format=json&v=1&action=jobs-prog&countryId=1&jobTitle=barista";
+        industry1SalaryReq.open("GET", industry1url);
+        industry1SalaryReq.send();
+    }
+}
+
+var salary1Calls = 0;
+var salary1Sum = 0;
+var salary1TotalCalls = 0;
+function getIndustry1SalaryData(){
+    var industry1SalaryData = JSON.parse(this.responseText);
+    //console.log(industry1SalaryData);
+    if (industry1SalaryData.response.payMedian != ""){
+        salary1Calls++;
+        salary1Sum += industry1SalaryData.response.payMedian;
+    }
+    salary1TotalCalls++;
+    if(salary1TotalCalls == industry1Data.response.jobTitles.length){
+        industry1Salary = salary1Sum/salary1Calls;
+        console.log(industry1Salary.toFixed(0));
+    }
+}
+
+
+
+function getIndustry2Data(id){
+    var industry2Req = new XMLHttpRequest();
+    industry2Req.addEventListener("load", industry2Listener);
+    var industry1url = "http://api.glassdoor.com/api/api.htm?t.p=46048&t.k=h0bHsIwlmfs&userip=0.0.0.0&useragent=&format=json&v=1&action=jobs-stats&returnJobTitles=true&admLevelRequested=1&jc=" + id;
+    industry2Req.open("GET", industry1url);
+    industry2Req.send();
+}
+
+
+function industry2Listener (){
+    industry2Data = JSON.parse(this.responseText);
+    var jobTitles = industry2Data.response.jobTitles;
+    var totalJobs = 0;
+    for (var i = 0; i < jobTitles.length; i++){
+        totalJobs += jobTitles[i].numJobs;
+    }
+    industry2Jobs = totalJobs;
+    console.log(totalJobs);
+    for (i = 0; i < industry2Data.response.jobTitles.length; i++){
+        var industry2SalaryReq = new XMLHttpRequest();
+        industry2SalaryReq.addEventListener("load", getIndustry2SalaryData);
+        var industry1url = "http://api.glassdoor.com/api/api.htm?t.p=46048&t.k=h0bHsIwlmfs&userip=0.0.0.0&useragent=&format=json&v=1&action=jobs-prog&countryId=1&jobTitle=" + industry2Data.response.jobTitles[i].jobTitle;
+        industry2SalaryReq.open("GET", industry1url);
+        industry2SalaryReq.send();
+    }
+}
+
+var salary2Calls = 0;
+var salary2Sum = 0;
+var salary2TotalCalls = 0;
+function getIndustry2SalaryData(){
+    var industry2SalaryData = JSON.parse(this.responseText);
+    if (industry2SalaryData.response.payMedian != ""){
+        salary2Calls++;
+        salary2Sum += industry2SalaryData.response.payMedian;
+    }
+    salary2TotalCalls++;
+    if(salary2TotalCalls == industry2Data.response.jobTitles.length){
+        industry2Salary = salary2Sum/salary2Calls;
+        console.log(industry2Salary.toFixed(0));
+    }
 }
 
 function initializeBarChart1() {
@@ -880,14 +950,146 @@ function initializeBubbleChart(){
     d3.select(self.frameElement).style("height", diameter + "px");
 }
 
+function initializeIndustryComparison(){
+    var compData = {
+        labels: [
+            'Job Availability', 'Job Salaries'
+        ],
+        series: [{label: 'Restaurant / Food Services', values: [211709, 34020]},
+                {label: 'Retail', values: [220726, 40946]
+            }]
+    };
+
+    var chartWidth       = 500,
+        barHeight        = 20,
+        groupHeight      = barHeight * compData.series.length,
+        gapBetweenGroups = 10,
+        spaceForLabels   = 150,
+        spaceForLegend   = 250;
+
+    // Zip the series data together (first values, second values, etc.)
+    var zippedData = [];
+    for (var i=0; i<compData.labels.length; i++) {
+        for (var j=0; j<compData.series.length; j++) {
+            zippedData.push(compData.series[j].values[i]);
+        }
+    }
+
+    // Color scale
+    var color = d3.scale.linear()
+        .domain([0, 42000])
+        .range(['#006d2c', '#006d2c']);
+//                .range(['#edf8e9', '#006d2c']);
+
+    var chartHeight = barHeight * zippedData.length + gapBetweenGroups * compData.labels.length;
+
+    var x = d3.scale.linear()
+        .domain([0, d3.max(zippedData)])
+        .range([0, chartWidth]);
+
+    var y = d3.scale.linear()
+        .range([chartHeight + gapBetweenGroups, 0]);
+
+    var yAxis = d3.svg.axis()
+        .scale(y)
+        .tickFormat('')
+        .tickSize(0)
+        .orient("left");
+
+    // Specify the chart area and dimensions
+    var chart = d3.select(".chart")
+        .attr("width", spaceForLabels + chartWidth + spaceForLegend)
+        .attr("height", chartHeight);
+
+    // Create bars
+    var bar = chart.selectAll("g")
+        .data(zippedData)
+        .enter().append("g")
+        .attr("transform", function(d, i) {
+            return "translate(" + spaceForLabels + "," + (i * barHeight + gapBetweenGroups * (0.5 + Math.floor(i/compData.series.length))) + ")";
+        });
+
+    // Create rectangles of the correct width
+    bar.append("rect")
+        .attr("fill", function(d,i) { return color(i % compData.series.length); })
+        .attr("class", "bar")
+        .attr("width", x)
+        .attr("height", barHeight - 1);
+
+    // Add text label in bar
+    bar.append("text")
+        .attr("x", function(d) { return x(d) - 3; })
+        .attr("y", barHeight / 2)
+        .attr("fill", '#006d2c')
+        .attr("dy", ".35em")
+        //fix to only add to the second element
+        .text(function(d, i) {
+            if( d == compData.series[0].values[1] || d == compData.series[1].values[1]) {
+                return "$" + d;
+            }
+            else{
+                return d;
+            }
+                });
+
+
+    //.tickFormat(function(d) { return "$" + (d); });
+
+    // Draw labels
+    bar.append("text")
+        .attr("class", "label")
+        .attr("x", function(d) { return - 10; })
+        .attr("y", groupHeight / 2)
+        .attr("dy", ".35em")
+        .text(function(d,i) {
+            if (i % compData.series.length === 0)
+                return compData.labels[Math.floor(i/compData.series.length)];
+            else
+                return ""});
+
+    chart.append("g")
+        .attr("class", "y axis")
+        .attr("transform", "translate(" + spaceForLabels + ", " + -gapBetweenGroups/2 + ")")
+        .call(yAxis);
+
+    // Draw legend
+    var legendRectSize = 18,
+        legendSpacing  = 4;
+
+    var legend = chart.selectAll('.legend')
+        .data(compData.series)
+        .enter()
+        .append('g')
+        .attr('transform', function (d, i) {
+            var height = legendRectSize + legendSpacing;
+            var offset = -gapBetweenGroups/2;
+            var horz = spaceForLabels + chartWidth + 40 - legendRectSize;
+            var vert = i * height - offset;
+            return 'translate(' + horz + ',' + vert + ')';
+        });
+
+    legend.append('rect')
+        .attr('width', legendRectSize)
+        .attr('height', legendRectSize)
+        .style('fill', function (d, i) { return color(i); })
+        .style('stroke', function (d, i) { return color(i); });
+
+    legend.append('text')
+        .attr('class', 'legend')
+        .attr('x', legendRectSize + legendSpacing)
+        .attr('y', legendRectSize - legendSpacing)
+        .text(function (d) { return d.label; });
+}
+
 d3.json("data/cashierprog.json", function (error, progressionData) {
     if (error) throw error;
     progData = progressionData;
     initializeBarChart1();
     initializeBarChart2();
-    initializeIndusrty1Data();
-    //initializeInd2Data();
+    //getIndustry1Data(22);
+    //getIndustry2Data(23);
     initializeBubbleChart();
+    initializeIndustryComparison();
     natJobSearch();
 });
 

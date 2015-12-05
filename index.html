@@ -5,19 +5,40 @@
     <meta charset="UTF-8">
     <title>Glassdoor Data Visualization</title>
     <style>
+
+        .chart .legend {
+            fill: black;
+            font: 14px sans-serif;
+            text-anchor: start;
+            font-size: 12px;
+        }
+
+        .chart text {
+            fill: white;
+            font: 10px sans-serif;
+            text-anchor: end;
+        }
+
+        .chart .label {
+            fill: black;
+            font: 14px sans-serif;
+            text-anchor: end;
+        }
+
+        .bar:hover {
+            fill: brown;
+        }
+
+        .axis path,
+        .axis line {
+            fill: none;
+            stroke: #000;
+            shape-rendering: crispEdges;
+        }
+
         #states {
             stroke: rgb(255, 255, 255);
             fill: rgb(216, 216, 216);
-        }
-        
-        .game {
-            fill: rgba(0, 117, 128, 0.01);
-            stroke: rgb(123, 123, 123);
-        }
-        
-       .team {
-            stroke: rgb(255, 0, 255);
-            fill: rgb(123, 123, 123);
         }
         
         #links > line {
@@ -76,6 +97,8 @@
 
             <button name="button" onclick="submitButtonPressed()">Submit</button>
 
+            <a href='https://www.glassdoor.com/index.htm'>powered by <img src='https://www.glassdoor.com/static/img/api/glassdoor_logo_80.png' title='Job Search' /></a>
+
         </span>
         <br/>
         <hr/>
@@ -83,8 +106,12 @@
         <span id="info"></span>
         <br/>
 
-        <div id="bubbleChart">
+        <div id = "comparisonChart">
+            <h4>Job availability and salaries for most common job in each of the below categories.</h4>
+            <svg class="chart"></svg>
         </div>
+
+        <div id="bubbleChart"></div>
 
 
 
